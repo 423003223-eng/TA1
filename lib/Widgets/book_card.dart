@@ -67,14 +67,15 @@ class BookCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 250,
+      width: 100,
       height: 90,
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 181, 255, 191),
+        color: const Color.fromARGB(255, 255, 255, 255),
         borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(color: Colors.deepPurple, width: 1.5),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 5,
             offset: const Offset(0, 3),
@@ -106,11 +107,19 @@ class BookCard extends StatelessWidget {
               ],
             ),
             if (book.status != BookStatus.read)
-              ElevatedButton(
-                onPressed: () {
-                  showUpdateProgress(context);
-                },
-                child: const Text('Update Progress'),
+              Padding(
+                padding: const EdgeInsets.only(left: 1150),
+                child: ElevatedButton(
+                  onPressed: () {
+                    showUpdateProgress(context);
+                  },
+                  child: const Text('Update Progress'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  ),
+                ),
               ),
           ],
         ),

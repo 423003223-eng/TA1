@@ -17,7 +17,8 @@ class GenreDropdownMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<BookGenre>(
-      menuWidth: 100,
+      menuWidth: 220,
+      borderRadius: BorderRadius.circular(10.0),
       hint: Text('Filter by Genre'),
       value: selectedGenre,
       icon: const Icon(Icons.filter_list),

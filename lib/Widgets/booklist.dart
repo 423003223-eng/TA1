@@ -23,6 +23,7 @@ class Booklist extends StatelessWidget {
     } else {
       // Case if may libro sa listahan, magdi-display ng ListView.builder para ipakita yung mga libro gamit yung BookCard widget.
       return ListView.builder(
+        padding: const EdgeInsets.all(16),
         itemCount: books.length,
         itemBuilder: (context, index) {
           return BookCard(book: books[index]);
