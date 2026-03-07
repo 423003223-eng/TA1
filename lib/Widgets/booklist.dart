@@ -1,4 +1,7 @@
-import 'book.dart';
+// Widget na para mag-display ng listahan ng mga libro sa iba't ibang screens (To Read, Reading, Read) ng library app.
+// Tumatanggap ng listahan ng mga libro bilang input at nagdi-display ng mga ito
+
+import '../Logic/book.dart';
 import 'package:flutter/material.dart';
 import 'book_card.dart';
 
@@ -10,6 +13,7 @@ class Booklist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (books.isEmpty) {
+      // Case if walang libro sa listahan, magdi-display ng message na "No books found."
       return const Center(
         child: Text(
           'No books found.',
@@ -17,6 +21,7 @@ class Booklist extends StatelessWidget {
         ),
       );
     } else {
+      // Case if may libro sa listahan, magdi-display ng ListView.builder para ipakita yung mga libro gamit yung BookCard widget.
       return ListView.builder(
         itemCount: books.length,
         itemBuilder: (context, index) {

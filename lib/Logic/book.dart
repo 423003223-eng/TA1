@@ -1,5 +1,8 @@
+// Class file ng book pang store ng mga book details as objects.
+
 enum BookGenre {
-  none('--Select Genre--'),
+  // Enum para sa mga genre ng libro
+  none('No Filter'),
   fiction('Fiction'),
   nonFiction('Non-Fiction'),
   mystery('Mystery'),
@@ -15,7 +18,7 @@ enum BookGenre {
   final String displayName;
 }
 
-enum BookStatus { toRead, reading, read }
+enum BookStatus { reading, toRead, read } // Enum para sa status ng libro
 
 class Book {
   final String title;
@@ -26,6 +29,7 @@ class Book {
   double progress = 0.0;
 
   Book({
+    // Construcotr para sa Book class
     required this.title,
     required this.totalPages,
     required this.bookGenre,

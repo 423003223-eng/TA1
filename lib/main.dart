@@ -1,70 +1,91 @@
 import 'package:flutter/material.dart';
-import 'book.dart';
-import 'booklist.dart';
-import 'searchbar.dart';
-import 'genredropdownmenu.dart';
+import 'package:provider/provider.dart';
+import 'Logic/book.dart';
+import 'Logic/book_provider.dart';
+import 'Screens/reading_screen.dart';
+import 'Screens/to_read_screen.dart';
+import 'Screens/add_book_screen.dart';
+import 'Screens/read_screen.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => BookProvider()),
+      ], // Nag-setup ng MultiProvider para sa buong app, kung saan nagre-register ng BookProvider bilang ChangeNotifierProvider para ma-manage yung state ng mga libro sa app.
+      child: const MainApp(),
+    ),
+  );
 }
 
-class MainApp extends StatelessWidget {
-  MainApp({super.key});
+class MainApp extends StatefulWidget {
+  const MainApp({super.key});
 
-  final Book bookSample1 = Book(
-    title: 'The Great Gatsby',
-    totalPages: 180,
-    bookGenre: BookGenre.fiction,
-  );
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
 
-  final Book bookSample2 = Book(
-    title: 'A Brief History of Time',
-    totalPages: 256,
-    bookGenre: BookGenre.nonFiction,
-  );
+class _MainAppState extends State<MainApp> {
+  int selectedStatus = BookStatus.reading.index;
 
-  final Book bookSample3 = Book(
-    title: 'The Hobbit',
-    totalPages: 310,
-    bookGenre: BookGenre.fantasy,
-  );
+  final List<Widget> _screens = [
+    // Listahan ng mga screens para sa bawat tab (Reading, To Read, Read) ng library app.
+    const ReadingScreen(),
+    const ToReadScreen(),
+    const ReadScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final List<Book> bookList = [bookSample1, bookSample2, bookSample3];
-
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('My Book Library')),
-        body: Center(
-          child: Column(
-            children: [
-              GenreDropdownMenu(onGenreSelected: (genre) {}),
-              Searchbar(
-                placeholder: 'Search books currently being read',
-                onChanged: (value) {
-                  // Implement search functionality here
-                },
-              ),
-              Expanded(child: Booklist(books: bookList)),
-            ],
+      home: Builder(
+        builder: (context) => Scaffold(
+          appBar: AppBar(title: const Text('My Book Library')),
+          body: Center(
+            child: IndexedStack(
+              index: selectedStatus,
+              children: _screens,
+            ), // Ginagamit ang IndexedStack para mag-display ng tamang screen base sa selectedStatus index, para ma-switch yung view kapag nagta-tap sa bottom navigation bar.
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.book),
-              label: 'Reading',
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.hourglass_bottom),
-              label: 'To Read',
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.check),
-              label: 'Read',
-            ),
-          ],
+          floatingActionButton: FloatingActionButton(
+            // Floating action button para mag-add ng bagong libro sa library app, kapag na-tap, magna-navigate papunta sa AddBookScreen kung saan pwedeng mag-input ng details ng bagong libro.
+            child: const Icon(Icons.add),
+            onPressed: () async {
+              final Book newBook = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddBookScreen(),
+                ), // Nagna-navigate papunta sa AddBookScreen gamit ang Navigator.push, at naghihintay ng result na bagong libro na ia-add sa library.
+              );
+              Provider.of<BookProvider>(
+                context,
+                listen: false,
+              ).addBook(newBook);
+            },
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            // Bottom navigation bar para mag-switch sa pagitan ng Reading, To Read, at Read screens ng library app.
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.book),
+                label: 'Reading',
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.hourglass_bottom),
+                label: 'To Read',
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.check),
+                label: 'Read',
+              ),
+            ],
+            currentIndex: selectedStatus,
+            onTap: (index) {
+              setState(() {
+                selectedStatus = index;
+              });
+            },
+          ),
         ),
       ),
     );

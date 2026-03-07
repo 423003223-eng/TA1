@@ -1,3 +1,6 @@
+// Widget na para sa search bar sa library app.
+// Tumatanggap ng placeholder text at callback function para i-update yung search query sa parent widget
+
 import 'package:flutter/material.dart';
 
 class Searchbar extends StatelessWidget {
