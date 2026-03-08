@@ -2,7 +2,7 @@
 
 enum BookGenre {
   // Enum para sa mga genre ng libro
-  none('No Filter'),
+  none('None'),
   fiction('Fiction'),
   nonFiction('Non-Fiction'),
   mystery('Mystery'),

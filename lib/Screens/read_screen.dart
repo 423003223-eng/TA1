@@ -18,7 +18,7 @@ class ReadScreen extends StatefulWidget {
 
 class _ReadScreenState extends State<ReadScreen> {
   String searchQuery = '';
-  BookGenre selectedGenre = BookGenre.none;
+  BookGenre? selectedGenre;
   List<Book> filteredBooks = [];
 
   @override
@@ -54,7 +54,11 @@ class _ReadScreenState extends State<ReadScreen> {
                   selectedGenre: selectedGenre,
                   onGenreSelected: (value) {
                     setState(() {
-                      selectedGenre = value;
+                      if (value == BookGenre.none) {
+                        selectedGenre = null;
+                      } else {
+                        selectedGenre = value;
+                      }
                     });
                   },
                 ),

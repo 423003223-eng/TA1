@@ -6,12 +6,12 @@ import '../Logic/book.dart';
 
 class GenreDropdownMenu extends StatelessWidget {
   final ValueChanged<BookGenre> onGenreSelected;
-  final BookGenre selectedGenre;
+  BookGenre? selectedGenre;
 
-  const GenreDropdownMenu({
+  GenreDropdownMenu({
     super.key,
-    required this.onGenreSelected,
     required this.selectedGenre,
+    required this.onGenreSelected,
   });
 
   @override

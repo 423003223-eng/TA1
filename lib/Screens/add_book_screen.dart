@@ -19,7 +19,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController pagesController = TextEditingController();
 
-  BookGenre selectedGenre = BookGenre.none;
+  BookGenre? selectedGenre;
 
   // Function para ihandle yung form submission. Ivalidate niya yung form, tapos kung valid,
   // gagawa siya ng bagong Book object at ipapasa pabalik sa previous screen gamit ang Navigator.pop.
@@ -28,7 +28,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       final newBook = Book(
         title: titleController.text,
         totalPages: int.parse(pagesController.text),
-        bookGenre: selectedGenre,
+        bookGenre: selectedGenre!,
       );
 
       Navigator.pop(context, newBook);
@@ -69,15 +69,23 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   labelText: "Total Pages",
                   border: OutlineInputBorder(),
                 ),
-                validator: (value) =>
-                    value!.isEmpty ? "Enter number of pages" : null,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter total pages";
+                  }
+                  if (int.tryParse(value) == null || int.parse(value) <= 0) {
+                    return "Enter a valid number of pages";
+                  }
+                  return null;
+                },
               ),
 
               const SizedBox(height: 16),
 
               /// Genre Dropdown
               DropdownButtonFormField<BookGenre>(
-                initialValue: BookGenre.none,
+                hint: const Text("Select a genre"),
+                initialValue: selectedGenre,
                 decoration: const InputDecoration(
                   labelText: "Genre",
                   border: OutlineInputBorder(),
@@ -90,10 +98,14 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    selectedGenre = value!;
+                    selectedGenre = value;
                   });
                 },
-                validator: (value) => value == null ? "Select a genre" : null,
+                validator: (value) {
+                  return value == BookGenre.none || value == null
+                      ? "Select a genre"
+                      : null;
+                },
               ),
 
               const SizedBox(height: 16),

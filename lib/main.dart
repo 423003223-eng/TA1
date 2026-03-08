@@ -38,23 +38,21 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, 
+      debugShowCheckedModeBanner: false,
 
-      theme: ThemeData( 
+      theme: ThemeData(
         primarySwatch: Colors.deepPurple,
         scaffoldBackgroundColor: Colors.white,
       ),
 
       home: Builder(
         builder: (context) => Scaffold(
-
           appBar: AppBar(
             title: const Text('My Book Library'),
-            centerTitle: true,  
-            backgroundColor: Colors.deepPurple, 
+            centerTitle: true,
+            backgroundColor: Colors.deepPurple,
             foregroundColor: const Color.fromARGB(255, 255, 255, 255),
-          ), 
-          
+          ),
 
           body: Container(
             decoration: const BoxDecoration(
@@ -79,31 +77,32 @@ class _MainAppState extends State<MainApp> {
           floatingActionButton: FloatingActionButton(
             // Floating action button para mag-add ng bagong libro sa library app, kapag na-tap, magna-navigate papunta sa AddBookScreen kung saan pwedeng mag-input ng details ng bagong libro.
             child: const Icon(Icons.add),
-            backgroundColor: Colors.deepPurple, 
+            backgroundColor: Colors.deepPurple,
             foregroundColor: Colors.white,
-            elevation: 6, 
+            elevation: 6,
             onPressed: () async {
-              final Book newBook = await Navigator.push(  
+              final Book? newBook = await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const AddBookScreen(),
                 ), // Nagna-navigate papunta sa AddBookScreen gamit ang Navigator.push, at naghihintay ng result na bagong libro na ia-add sa library.
               );
-              Provider.of<BookProvider>(
-                context,
-                listen: false,
-              ).addBook(newBook);
+              if (newBook != null) {
+                Provider.of<BookProvider>(
+                  context,
+                  listen: false,
+                ).addBook(newBook);
+              }
             },
           ),
 
           bottomNavigationBar: BottomNavigationBar(
             // Bottom navigation bar para mag-switch sa pagitan ng Reading, To Read, at Read screens ng library app.
-            selectedItemColor: Colors.deepPurple, 
-            unselectedItemColor: const Color.fromARGB(255, 50, 50, 50), 
-            showUnselectedLabels: true, 
+            selectedItemColor: Colors.deepPurple,
+            unselectedItemColor: const Color.fromARGB(255, 50, 50, 50),
+            showUnselectedLabels: true,
             backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-            type: BottomNavigationBarType.fixed, 
-            
+            type: BottomNavigationBarType.fixed,
 
             items: [
               BottomNavigationBarItem(
