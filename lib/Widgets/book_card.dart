@@ -14,7 +14,7 @@ class BookCard extends StatelessWidget {
   void showUpdateProgress(BuildContext context) {
     // Function na para magpakita ng bottom sheet para i-update yung reading progress ng libro.
     final TextEditingController pageController = TextEditingController();
-    final _formKey = GlobalKey<FormState>(); // Added form key for validation
+    final formKey = GlobalKey<FormState>(); // Added form key for validation
 
     showModalBottomSheet(
       context: context,
@@ -23,7 +23,7 @@ class BookCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
 
           child: Form(
-            key: _formKey, // Assigned the form key
+            key: formKey, // Assigned the form key
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -65,7 +65,7 @@ class BookCard extends StatelessWidget {
                   //mula sa text field, kino-compute yung new progress percentage, tapos tinatawag yung
                   //updateProgress method ng BookProvider para i-update yung libro.
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
+                    if (formKey.currentState!.validate()) {
                       // Added validation check
                       final newPage = int.parse(pageController.text);
                       final newProgress = (newPage / book.totalPages) * 100;

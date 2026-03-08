@@ -25,8 +25,11 @@ class Booklist extends StatelessWidget {
       return ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: books.length,
-        itemBuilder: (context, index) {
-          return BookCard(book: books[index]);
+        itemBuilder: (context, index){
+          return Padding(padding: const
+          EdgeInsets.only(bottom: 12),
+          child: BookCard(book: books[index]),
+          );
         },
       );
     }

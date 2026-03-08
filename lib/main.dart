@@ -76,10 +76,10 @@ class _MainAppState extends State<MainApp> {
 
           floatingActionButton: FloatingActionButton(
             // Floating action button para mag-add ng bagong libro sa library app, kapag na-tap, magna-navigate papunta sa AddBookScreen kung saan pwedeng mag-input ng details ng bagong libro.
-            child: const Icon(Icons.add),
             backgroundColor: Colors.deepPurple,
             foregroundColor: Colors.white,
             elevation: 6,
+            child: const Icon(Icons.add),
             onPressed: () async {
               final Book? newBook = await Navigator.push(
                 context,

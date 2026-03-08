@@ -2,7 +2,7 @@
 
 enum BookGenre {
   // Enum para sa mga genre ng libro
-  none('None'),
+  none('All'),
   fiction('Fiction'),
   nonFiction('Non-Fiction'),
   mystery('Mystery'),
@@ -29,7 +29,7 @@ class Book {
   double progress = 0.0;
 
   Book({
-    // Construcotr para sa Book class
+    // Constructor para sa Book class
     required this.title,
     required this.totalPages,
     required this.bookGenre,

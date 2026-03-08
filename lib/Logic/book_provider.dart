@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'book.dart';
 
 class BookProvider with ChangeNotifier {
-  List<Book> _books = []; // Listahan ng mga libro sa library app
+  final List<Book> _books = []; // Listahan ng mga libro sa library app
 
   List<Book> get books =>
       _books; // Getter para makuha yung listahan ng mga libro
